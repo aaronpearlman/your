@@ -163,7 +163,7 @@ class Writer:
         else:
             nloops = 1
         nstarts = np.arange(self.nstart, self.nstart + interval * nloops, interval, dtype=int)
-        nsamps = np.full(nloops, interval)
+        nsamps = np.full(int(nloops), interval)
         if self.nsamp % interval != 0:
             nsamps = np.append(nsamps, [nsamps % interval])
 
