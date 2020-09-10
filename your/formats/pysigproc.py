@@ -82,7 +82,8 @@ class SigprocFile(object):
     _type['tstart'] = 'double'
     _type['tsamp'] = 'double'
     _type['nifs'] = 'int'
-
+    _type['nsamples'] = 'int'
+    
     def __init__(self, fp=None, copy_hdr=None):
         # init all items to None
         for k in list(self._type.keys()):

@@ -266,7 +266,7 @@ class PsrfitsFile(object):
                 data += sdata[:, 1, :].squeeze()
             elif (len(shp) == 3 and shp[1] == self.npoln and
                   self.poln_order == "IQUV"):
-                logger.warning("Polarization is IQUV")
+                logger.warning("Polarization is IQUV (pol = %i)" % pol)
                 data = np.zeros((self.nsamp_per_subint,
                                  self.nchan), dtype=np.float32)
                 if pol == 0:
