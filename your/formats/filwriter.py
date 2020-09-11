@@ -43,7 +43,12 @@ def make_sigproc_obj(filfile, your_object, nchans, chan_freq, nstart):
     fil_obj.pulsarcentric = 0
     fil_obj.telescope_id = 6  # use only GBT for now
     fil_obj.data_type = 0
-
+    
+    # Enable these parameters for DSN data.
+    # fil_obj.telescope_id = 12 # For Canberra DSN (DSS-43)
+    # fil_obj.machine_id = 999
+    # fil_obj.data_type = 1
+     
     fil_obj.nchans = nchans
     fil_obj.foff = your_object.your_header.foff
     fil_obj.fch1 = chan_freq[0]

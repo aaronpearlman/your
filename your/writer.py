@@ -153,22 +153,28 @@ class Writer:
         # Calculate loop of spectra
         if not self.nsamp:
             self.nsamp = self.your_obj.your_header.native_nspectra
-
+        
         interval = 4096 * 24
         if self.nsamp < interval:
             interval = self.nsamp
 
         if self.nsamp > interval:
-            nloops = 1 + self.nsamp // interval
+            nloops = self.nsamp // interval
         else:
             nloops = 1
-        nstarts = np.arange(self.nstart, self.nstart + interval * nloops, interval, dtype=int)
+        
         nsamps = np.full(int(nloops), interval)
         if self.nsamp % interval != 0:
-            nsamps = np.append(nsamps, [nsamps % interval])
+            nsamps = np.append(nsamps, [self.nsamp % interval])
+            nloops += 1
+        nstarts = np.arange(self.nstart, self.nstart + interval * nloops, interval, dtype=int)
 
         logging.debug(f'nstarts is {nstarts}, nsamps is {nsamps}, nloops is {nloops}, interval is {interval}, '
                       f'nstart is {self.nstart}')
+        
+        assert np.sum(nsamps) == self.nsamp, "Sum of [nsamps] is not equal to total number of spectra to read."
+        
+        
         # Read data
         for st, samp in tqdm.tqdm(zip(nstarts, nsamps), total=len(nstarts), disable=self.progress):
             logger.debug(f'Reading spectra {st}-{st + samp} in file {self.your_obj.your_header.filename}')
